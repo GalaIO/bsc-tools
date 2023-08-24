@@ -788,6 +788,12 @@ func fetchValidatorRewards(endpoint string, fromBlk uint64, toBlk uint64, fetchS
 			}
 			return nil
 		}),
+		//event crossChainPackageEvent();
+		NewEventHandler(crossChainPackageEvent, func(logs []*types.Log) error {
+			log0 := logs[0]
+			logger.Info("[Start crossChainPackage] tx %v %v", log0.BlockNumber, log0.TxHash)
+			return nil
+		}),
 		//event validatorSetUpdated();
 		NewEventHandler(validatorSetUpdatedEvent, func(logs []*types.Log) error {
 			// recall fetch cross chain updateValidatorSet tx
